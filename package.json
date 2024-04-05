@@ -1,0 +1,34 @@
+{
+  "type": "module",
+  "name": "kanbas-react-server-app",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web Server for the Kanbas Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node App.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RajivShah1798/kanbas-server.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP",
+    "Web",
+    "Development",
+    "CS5610"
+  ],
+  "author": "Rajiv Shah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RajivShah1798/kanbas-server/issues"
+  },
+  "homepage": "https://github.com/RajivShah1798/kanbas-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
