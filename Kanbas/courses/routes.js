@@ -1,50 +1,46 @@
-import Database from "../Database/index.js";
+//import Database from "../Database/index.js";
+import * as dao from "./dao.js";
 export default function CourseRoutes(app) {
 
     // Get an App by Id
-    app.get("/api/courses/:id", (req, res) => {
+    const fetchCourseById = async (req, res) => {
         const { id } = req.params;
-        const course = Database.courses
-            .find((c) => c._id === id);
-        if (!course) {
-            res.status(404).send("Course not found");
-            return;
-        }
-    res.send(course);
-    });
+        console.log("Server CourseID: ", id)
+        const course = await dao.findCourseById(id);
+        console.log(course);
+        res.json(course);
+    };
 
     // Update a Course
-    app.put("/api/courses/:id", (req, res) => {
+    const updateCourse = async (req, res) => {
         const { id } = req.params;
-        const course = req.body;
-        Database.courses = Database.courses.map(
-            (c) => c._id === id? {...c, ...course} : c
-        );
-        res.sendStatus(204);
-    });
+        const status = await dao.updateCourse(id, req.body);
+        res.json(status);
+    };
 
     // Get All Courses
-    app.get("/api/courses", (req, res) => {
-        const courses = Database.courses;
+    const fetchAllCourses = async (req, res) => {
+        const courses = await dao.findAllCourses();
         res.send(courses);
-    });
+    };
 
     // Delete a Course
-    app.delete("/api/courses/:id", (req, res) => {
-        const { id } = req.params;
-        Database.courses = Database.courses.filter(
-            (course) => course._id != id
-        );
-        res.sendStatus(204);
-    });
-
-    
+    const deleteCourse = async (req, res) => {
+        const status = await dao.deleteModule(req.params.id);
+        res.json(status);
+    };
 
     // Add a New Course
-    app.post("/api/courses", (req, res) => {
+    const createCourse = async (req, res) => {
         const course = {...req.body,
         id: new Date().getTime().toString()};
-        Database.courses.push(course);
-        res.send(course);
-    });
-}
+        res.json(await dao.createCourse(course));
+    };
+
+    app.post("/api/courses", createCourse);
+    app.delete("/api/courses/:id", deleteCourse);
+    app.put("/api/courses/:id", updateCourse);
+    app.get("/api/courses/:id", fetchCourseById);
+    app.get("/api/courses", fetchAllCourses);
+    
+};
