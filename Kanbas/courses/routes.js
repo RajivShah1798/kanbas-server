@@ -5,7 +5,6 @@ export default function CourseRoutes(app) {
     // Get an App by Id
     const fetchCourseById = async (req, res) => {
         const { id } = req.params;
-        console.log("Server CourseID: ", id)
         const course = await dao.findCourseById(id);
         console.log(course);
         res.json(course);
